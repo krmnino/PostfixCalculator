@@ -1,28 +1,77 @@
 
 public class Main {
-	public static void string_parser(String input) {
-		/*
-		for(int i = 0 ; i < input.length(); i++) {
-			
+	
+	public static double string_parser(Stack s, String input) {
+		System.out.println(input);
+		int space_pos;
+		String expression;
+		while(input.length() >= 1) {
+			space_pos = input.indexOf(' ');
+			if(space_pos == -1 && s.get_size() < 2) {
+				System.out.println("There is a missing operand in the expression");
+				return -1;
+			}
+			if(space_pos == -1) {
+				char operator = input.charAt(0);
+				Node operand1 = s.pop();
+				Node operand2 = s.pop();
+				if(operand1 == null || operand2 == null) {
+					System.out.println("There is a missing operand in the expression");
+					return -1;
+				}
+				switch(operator) {
+				case '+':
+					s.push(operand1.get_data() + operand2.get_data());
+					break;
+				case '-':
+					s.push(operand1.get_data() - operand2.get_data());
+					break;
+				case '*':
+					s.push(operand1.get_data() * operand2.get_data());
+					break;
+				case '/':
+					s.push(operand1.get_data() / operand2.get_data());
+					break;
+				default:
+				}
+				break;
+			}
+			expression = input.substring(0, space_pos);
+			if(!expression.equals("+") && !expression.equals("-") && 
+			   !expression.equals("*") && !expression.equals("/")) {
+				s.push(Double.valueOf(expression));
+			}
+			else {
+				char operator = input.charAt(0);
+				Node operand1 = s.pop();
+				Node operand2 = s.pop();
+				if(operand1 == null || operand2 == null) {
+					System.out.println("There is a missing operand in the expression");
+					return -1;
+				}
+				switch(operator) {
+				case '+':
+					s.push(operand1.get_data() + operand2.get_data());
+					break;
+				case '-':
+					s.push(operand1.get_data() - operand2.get_data());
+					break;
+				case '*':
+					s.push(operand1.get_data() * operand2.get_data());
+					break;
+				case '/':
+					s.push(operand1.get_data() / operand2.get_data());
+					break;
+				default:
+				}
+			}
+			input = input.substring(space_pos + 1, input.length());
 		}
-		*/
-		int upper = input.indexOf(' ');
-		String num = input.substring(0, upper);
-		System.out.println(Double.valueOf(num));
+		return s.pop().get_data();
 	}
 	
 	public static void main(String[] args) {
-		/*
 		Stack s = new Stack();
-		for(int i = 0; i < 10; i++) {
-			s.push(i * i);
-		}
-		System.out.println(s.toString());
-		for(int i = 0; i < 5; i++) {
-			System.out.println(s.pop().toString());
-		}
-		System.out.println(s.peek().toString());
-		*/
-		string_parser("123.6 43 + 2 *");
+		System.out.println(string_parser(s, "123.6 43 45 + 2 * /"));
 	}
 }

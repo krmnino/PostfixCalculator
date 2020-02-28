@@ -8,6 +8,10 @@ public class Stack {
 		this.size = 0;
 	}
 	
+	public int get_size() {
+		return this.size;
+	}
+	
 	public boolean isEmpty() {
 		if(this.top == null && this.size == 0) {
 			return true;
@@ -27,6 +31,9 @@ public class Stack {
 	}
 	
 	public Node pop() {
+		if(this.isEmpty()) {
+			return null;
+		}
 		Node out = this.top;
 		this.top = this.top.get_next();
 		this.size--;
