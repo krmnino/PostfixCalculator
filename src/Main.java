@@ -11,32 +11,12 @@ public class Main {
 				System.out.println("There is a missing operand in the expression");
 				return -1;
 			}
-			if(space_pos == -1) {
-				char operator = input.charAt(0);
-				Node operand1 = s.pop();
-				Node operand2 = s.pop();
-				if(operand1 == null || operand2 == null) {
-					System.out.println("There is a missing operand in the expression");
-					return -1;
-				}
-				switch(operator) {
-				case '+':
-					s.push(operand1.get_data() + operand2.get_data());
-					break;
-				case '-':
-					s.push(operand1.get_data() - operand2.get_data());
-					break;
-				case '*':
-					s.push(operand1.get_data() * operand2.get_data());
-					break;
-				case '/':
-					s.push(operand1.get_data() / operand2.get_data());
-					break;
-				default:
-				}
-				break;
+			if(space_pos != -1) {
+				expression = input.substring(0, space_pos);
 			}
-			expression = input.substring(0, space_pos);
+			else {
+				expression = input;
+			}
 			if(!expression.equals("+") && !expression.equals("-") && 
 			   !expression.equals("*") && !expression.equals("/")) {
 				s.push(Double.valueOf(expression));
@@ -65,7 +45,12 @@ public class Main {
 				default:
 				}
 			}
-			input = input.substring(space_pos + 1, input.length());
+			if(space_pos != -1) {
+				input = input.substring(space_pos + 1, input.length());
+			}
+			else {
+				break;
+			}
 		}
 		return s.pop().get_data();
 	}
