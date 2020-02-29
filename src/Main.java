@@ -2,15 +2,14 @@ import java.util.Scanner;
 
 public class Main {
 	
-	public static double string_parser(String input) {
+	public static Node string_parser(String input) {
 		Stack s = new Stack();
 		int space_pos;
 		String expression;
 		while(input.length() >= 1) {
 			space_pos = input.indexOf(' ');
 			if(space_pos == -1 && s.get_size() < 2) {
-				System.out.println("There is a missing operand in the expression");
-				return -1;
+				return null;
 			}
 			if(space_pos != -1) {
 				expression = input.substring(0, space_pos);
@@ -27,8 +26,7 @@ public class Main {
 				Node operand1 = s.pop();
 				Node operand2 = s.pop();
 				if(operand1 == null || operand2 == null) {
-					System.out.println("There is a missing operand in the expression");
-					return -1;
+					return null;
 				}
 				switch(operator) {
 				case '+':
@@ -53,7 +51,7 @@ public class Main {
 				break;
 			}
 		}
-		return s.pop().get_data();
+		return s.pop();
 	}
 	
 	public static void program_loop() {
@@ -66,7 +64,13 @@ public class Main {
 			if(input_str.equals("q") || input_str.equals("Q")) {
 				break;
 			}
-			System.out.println("Result: " + string_parser(input_str));			
+			Node result = string_parser(input_str);
+			if(result != null) {
+				System.out.println("Result: " + result.get_data());
+			}
+			else {
+				System.out.println("There is a missing operand or operator in the expression");
+			}
 		}
 	}
 	
