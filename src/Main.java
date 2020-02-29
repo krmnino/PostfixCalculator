@@ -1,8 +1,9 @@
+import java.util.Scanner;
 
 public class Main {
 	
-	public static double string_parser(Stack s, String input) {
-		System.out.println(input);
+	public static double string_parser(String input) {
+		Stack s = new Stack();
 		int space_pos;
 		String expression;
 		while(input.length() >= 1) {
@@ -31,16 +32,16 @@ public class Main {
 				}
 				switch(operator) {
 				case '+':
-					s.push(operand1.get_data() + operand2.get_data());
+					s.push(operand2.get_data() + operand1.get_data());
 					break;
 				case '-':
-					s.push(operand1.get_data() - operand2.get_data());
+					s.push(operand2.get_data() - operand1.get_data());
 					break;
 				case '*':
-					s.push(operand1.get_data() * operand2.get_data());
+					s.push(operand2.get_data() * operand1.get_data());
 					break;
 				case '/':
-					s.push(operand1.get_data() / operand2.get_data());
+					s.push(operand2.get_data() / operand1.get_data());
 					break;
 				default:
 				}
@@ -55,8 +56,21 @@ public class Main {
 		return s.pop().get_data();
 	}
 	
+	public static void program_loop() {
+		@SuppressWarnings("resource")
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Postfix Calculator by Kurt Manrique-Nino\nEnter Q/q to quit.");
+		while(true) {
+			System.out.print(">> ");
+			String input_str = scan.nextLine();
+			if(input_str.equals("q") || input_str.equals("Q")) {
+				break;
+			}
+			System.out.println("Result: " + string_parser(input_str));			
+		}
+	}
+	
 	public static void main(String[] args) {
-		Stack s = new Stack();
-		System.out.println(string_parser(s, "123.6 43 45 + 2 * /"));
+		program_loop();
 	}
 }
